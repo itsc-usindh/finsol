@@ -1,0 +1,6 @@
+@FinSol_HostAddress = http://localhost:5219
+
+GET {{FinSol_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
