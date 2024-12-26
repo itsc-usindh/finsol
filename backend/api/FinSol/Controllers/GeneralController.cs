@@ -7,7 +7,7 @@ namespace FinSol.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class GeneralController : ControllerBase
     {
         private readonly IGeneralRepository _organizationRepository;
@@ -43,6 +43,13 @@ namespace FinSol.Controllers
         public async Task<IEnumerable<StatusResponseModel>> GetStatus()
         {
             var status = await _organizationRepository.GetStatus();
+
+            return status;
+        }
+        [HttpGet("GetPositions")]
+        public async Task<IEnumerable<PositionResponseModel>> GetPositions([FromQuery] int maxRows)
+        {
+            var status = await _organizationRepository.GetPositions(maxRows);
 
             return status;
         }

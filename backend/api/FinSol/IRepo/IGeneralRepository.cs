@@ -8,5 +8,6 @@ namespace FinSol.IRepo
         Task<OrganizationResponseModel> GetOrganizationById(int id);
         Task<IEnumerable<DepartmentResponseModel>> GetDepartments();
         Task<IEnumerable<StatusResponseModel>> GetStatus();
+        Task<IEnumerable<PositionResponseModel>> GetPositions(int maxRows);
     }
 }

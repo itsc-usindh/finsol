@@ -58,5 +58,16 @@ namespace FinSol.Repo
                 return res.ToList();
             }
         }
+        public async Task<IEnumerable<PositionResponseModel>> GetPositions(int maxRows)
+        {
+            string query = "GetPositions";
+
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                var res = await connection.QueryAsync<PositionResponseModel>(query,new { MaxRows = maxRows});
+
+                return res.ToList();
+            }
+        }
     }
 }
