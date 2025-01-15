@@ -11,7 +11,7 @@ const Login = ({ setIsLoggedIn }) => {
             alert("Username and Password is required ...");
             return;
         }
-        const loginRes = await CallAPI('auth/login','POST', {username,password});
+        const loginRes = {token:"A JWT TOKEN"};//await CallAPI('auth/login','POST', {username,password});
         if(loginRes.token){
             window.localStorage.login = JSON.stringify(loginRes);
             window.localStorage.token = loginRes.token;

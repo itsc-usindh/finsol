@@ -416,6 +416,11 @@ td.purchased p:before {
     border: solid 1px var(--grey);
 }
 
+.combobox .combobox-btn p{
+    max-height: 18px;
+    overflow: hidden;
+}
+
 .combobox p {
     margin: 0;
 }
@@ -433,13 +438,14 @@ td.purchased p:before {
     max-height: 0px;
     overflow: auto;
     z-index: -1;
-    min-width: 300px;
+    opacity: 0;
 }
 
 .combobox .combobox-btn.open+.combobox-items {
     max-height: 155px;
     top: 100%;
     z-index: 1;
+    opacity: 1;
 }
 
 .combobox .combobox-items p:nth-of-type(1) {

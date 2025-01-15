@@ -4,5 +4,6 @@
     {
         public string? Msg { get; set; }
         public bool Status { get; set; }
+        public object? Data { get; set; }
     }
 }

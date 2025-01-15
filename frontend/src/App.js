@@ -3,11 +3,14 @@ import DashboardLayout from "./Layout/dashboardLayout";
 import { useState } from "react";
 import Login from "./Screens/login";
 import Dashboard from "./Screens/dashboard";
-import ListPurchase from "./Screens/purchase/listPurchase";
-import AddPurchase from "./Screens/purchase/addPurchase";
-import ListDelivery from "./Screens/delivery/lisDelivery";
-import AddDelivery from "./Screens/delivery/addDelivery";
-import Inventory from "./Screens/inventory";
+import ListBudget from "./Screens/budget/listBudget";
+import AddBudget from "./Screens/budget/addBudget";
+import ListEmployee from "./Screens/employees/listEmployee";
+import AddEmployee from "./Screens/employees/addEmployee";
+import Campus from "./Screens/Campus";
+import Faculty from "./Screens/Faculty";
+import Department from "./Screens/Department";
+import Section from "./Screens/Section";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,11 +20,14 @@ function App() {
       <DashboardLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/listPurchase" element={<ListPurchase />} />
-          <Route path="/addPurchase" element={<AddPurchase />} />
-          <Route path="/listDelivery" element={<ListDelivery />} />
-          <Route path="/addDelivery" element={<AddDelivery />} />
+          <Route path="/listCampus" element={<Campus />} />
+          <Route path="/listFaculty" element={<Faculty />} />
+          <Route path="/listDepartment" element={<Department />} />
+          <Route path="/listSection" element={<Section />} />
+          <Route path="/listBudget" element={<ListBudget />} />
+          <Route path="/addBudget" element={<AddBudget />} />
+          <Route path="/listEmployee" element={<ListEmployee />} />
+          <Route path="/addEmployee" element={<AddEmployee />} />
         </Routes>
       </DashboardLayout> :
 

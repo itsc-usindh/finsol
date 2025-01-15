@@ -14,6 +14,26 @@ namespace FinSol.Repo
             _dapperContext = dapperContext;
         }
 
+        public async Task<ResponseModel> ExecuteStoreProcedure(string spName, object parameters = null)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+
+                var Data = await connection.QueryAsync<object>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                ResponseModel res = new()
+                {
+                    Status = true,
+                    Msg = spName + ": Success...",
+                    Data = Data.ToList()
+                };
+
+                return res;
+            }
+        }
         public async Task<IEnumerable<OrganizationResponseModel>> GetOrganization()
         {
             string query = "SELECT * FROM organizations WHERE isActive = 1";

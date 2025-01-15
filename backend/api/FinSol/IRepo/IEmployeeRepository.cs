@@ -7,5 +7,7 @@ namespace FinSol.IRepo
     {
         Task<IEnumerable<EmployeeResponseModel>> GetAllEmployees(int maxRow);
         Task<ResponseModel> AddEmployee(EmployeeRequestModel payload);
+        Task<ResponseModel> UpdateEmployee(EmployeeRequestModel payload);
+        Task<ResponseModel> DeleteEmployee(Guid Id, Guid userId);
     }
 }

@@ -6,7 +6,7 @@ import Topbar from "../../Components/Topbar";
 import SlideIn from "../../Components/SlideIn";
 import CallAPI from "../../Utils/callApi";
 
-const AddPurchase = () => {
+const AddBudget = () => {
     const [items, setItems] = useState();
     const [addedItems, setAddedItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState();
@@ -166,4 +166,4 @@ const AddPurchase = () => {
     );
 }
 
-export default AddPurchase;
+export default AddBudget;

@@ -14,7 +14,7 @@ const Sidebar = () => {
         console.log((currentPath))
         if (!routes.find(r => r.subMenu?.some(sr => sr.route === currentPath)))
             setExpandedItem("");
-        setUserDataHandler();
+        //setUserDataHandler();
     }, [currentPath]);
 
     useEffect(() => {
@@ -78,69 +78,95 @@ const Sidebar = () => {
         setRoutes(_routes);
     }
 
-    // setRoutes([
-    //     {
-    //         name: "Dashboard",
-    //         route: "/",
-    //         icon: <i className="fas fa-home icon"></i>,
-    //         type: 1,
-    //         subMenu: null
-    //     },
-    //     {
-    //         name: "Inventory Items",
-    //         route: "/inventory",
-    //         icon: <i className="fas fa-box-open icon"></i>,
-    //         type: 1,
-    //         subMenu: null
-    //     },
-    //     {
-    //         name: "Purchase",
-    //         route: "/purchase",
-    //         icon: <i className="fas fa-shopping-cart icon"></i>,
-    //         type: 2,
-    //         subMenu: [
-    //             {
-    //                 name: "List Purchase",
-    //                 route: "/listPurchase",
-    //                 icon: <i className="fas fa-bars icon"></i>,
-    //                 type: 1
-    //             },
-    //             {
-    //                 name: "Add Purchase",
-    //                 route: "/addPurchase",
-    //                 icon: <i className="fas fa-plus icon"></i>,
-    //                 type: 1
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         name: "Delivery",
-    //         route: "/delivery",
-    //         icon: <i className="fas fa-shopping-cart icon"></i>,
-    //         type: 2,
-    //         subMenu: [
-    //             {
-    //                 name: "List Deliveries",
-    //                 route: "/listDelivery",
-    //                 icon: <i className="fas fa-bars icon"></i>,
-    //                 type: 1
-    //             },
-    //             {
-    //                 name: "Add Delivery",
-    //                 route: "/addDelivery",
-    //                 icon: <i className="fas fa-plus icon"></i>,
-    //                 type: 1
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         name: "Dashboard2",
-    //         route: "/2",
-    //         icon: <i className="fas fa-home icon"></i>,
-    //         type: 1,
-    //         subMenu: null
-    //     },
-    // ]);
+    useEffect(()=> {
+
+        setRoutes([
+            {
+                name: "Dashboard",
+                route: "/",
+                icon: <i className="fas fa-gauge icon"></i>,
+                type: 1,
+                subMenu: null
+            },
+            {
+                name: "General",
+                route: "/",
+                icon: <i className="fas fa-home icon"></i>,
+                type: 2,
+                subMenu: [
+                    {
+                        name: "Campus",
+                        route: "/listCampus",
+                        icon: <i className="fas fa-home icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    },
+                    {
+                        name: "Faculties",
+                        route: "/listFaculty",
+                        icon: <i className="fas fa-book icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    },
+                    {
+                        name: "Departments",
+                        route: "/listDepartment",
+                        icon: <i className="fas fa-building icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    },
+                    {
+                        name: "Sections",
+                        route: "/listSection",
+                        icon: <i className="fas fa-door-open icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    },
+                ]
+            },
+            
+            {
+                name: "Budget",
+                route: "/budget",
+                icon: <i className="fas fa-coins icon"></i>,
+                type: 2,
+                subMenu: [
+                    {
+                        name: "List",
+                        route: "/listBudget",
+                        icon: <i className="fas fa-bars icon"></i>,
+                        type: 1
+                    },
+                    {
+                        name: "New",
+                        route: "/newBudget",
+                        icon: <i className="fas fa-plus icon"></i>,
+                        type: 1
+                    }
+                ]
+            },
+            {
+                name: "Employees",
+                route: "/employees",
+                icon: <i className="fas fa-user icon"></i>,
+                type: 2,
+                subMenu: [
+                    {
+                        name: "List",
+                        route: "/listEmployee",
+                        icon: <i className="fas fa-bars icon"></i>,
+                        type: 1
+                    },
+                    {
+                        name: "Add",
+                        route: "/addEmployee",
+                        icon: <i className="fas fa-plus icon"></i>,
+                        type: 1
+                    }
+                ]
+            },
+        ]);
+    },[]);
 
 
     const expandItem = (selectedRoute) => {
@@ -151,7 +177,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar-content">
             <div className="title">
-                <h1>PSO Management</h1>
+                <h1>Finanace App</h1>
                 <div className="seperator"></div>
             </div>
             <ul className="nav-items">

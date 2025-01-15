@@ -10,9 +10,10 @@
         public string ProfilePhotoUrl { get; set; }
         public string Gender { get; set; }
         public string Religion { get; set; }
+        public string Position { get; set; }
         public Guid PositionId { get; set; }
         public DateTime AppointedOn { get; set; }
-        public DateTime RetiredOn { get; set; }
+        public Nullable<DateTime> RetiredOn { get; set; }
         public double MinPay {  get; set; }
         public double AnnualIncreament {  get; set; }
         public double MaxPay {  get; set; }

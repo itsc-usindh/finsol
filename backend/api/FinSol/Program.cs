@@ -18,6 +18,7 @@ builder.Services.AddScoped<IGeneralRepository, GeneralRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 
 
 
@@ -58,7 +59,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins(["http://localhost:3000", "http://121.52.154.50:3000"])  // React frontend URL (adjust as needed)
+        policy.WithOrigins(["http://localhost:3001", "http://121.52.154.50:3001", "http://localhost:3000", "http://121.52.154.50:3000"])  // React frontend URL (adjust as needed)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();  // If you need credentials (cookies, HTTP auth, etc.)

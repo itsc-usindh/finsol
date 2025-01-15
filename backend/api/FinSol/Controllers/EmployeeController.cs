@@ -27,5 +27,16 @@ namespace FinSol.Controllers
         {
             return await _employeeRepository.GetAllEmployees(maxRow);
         }
+        [HttpPost("Update")]
+        public async Task<ActionResult<ResponseModel>> Update(EmployeeRequestModel payload)
+        {
+            return Ok(await _employeeRepository.UpdateEmployee(payload));
+        }
+        [HttpPost("Delete")]
+        public async Task<ActionResult<ResponseModel>> Delete([FromQuery] Guid Id)
+        {
+            // add user id from claims when login is done
+            return Ok(await _employeeRepository.DeleteEmployee(Id, Guid.Empty));
+        }
     }
 }

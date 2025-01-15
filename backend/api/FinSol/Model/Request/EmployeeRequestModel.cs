@@ -12,6 +12,6 @@
         public string Religion { get; set; }
         public Guid PositionId { get; set; }
         public DateTime? AppointedOn { get; set; }
-        public DateTime? RetiredOn { get; set; }
+        public Nullable<DateTime> RetiredOn { get; set; }
     }
 }
