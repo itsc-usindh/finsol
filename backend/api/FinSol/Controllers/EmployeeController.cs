@@ -38,5 +38,29 @@ namespace FinSol.Controllers
             // add user id from claims when login is done
             return Ok(await _employeeRepository.DeleteEmployee(Id, Guid.Empty));
         }
+
+        // Employee Education
+
+        [HttpPost("AddEmployeeEducation")]
+        public async Task<ActionResult<ResponseModel>> AddEmployeeEducation(EmployeeEducationRequestModel payload)
+        {
+            return Ok(await _employeeRepository.AddEmployeeEducation(payload));
+        }
+        [HttpGet("ListEmployeeEducation")]
+        public async Task<IEnumerable<EmployeeResponseModel>> ListEmployeeEducation([FromQuery] Guid emplyeeId)
+        {
+            return await _employeeRepository.GetEmployeeEducations(emplyeeId);
+        }
+        [HttpPost("UpdateEmployeeEducation")]
+        public async Task<ActionResult<ResponseModel>> UpdateEmployeeEducation(EmployeeEducationRequestModel payload)
+        {
+            return Ok(await _employeeRepository.UpdateEmployeeEducation(payload));
+        }
+        [HttpPost("DeleteEmployeeEducation")]
+        public async Task<ActionResult<ResponseModel>> DeleteEmployeeEducation([FromQuery] Guid Id)
+        {
+            // add user id from claims when login is done
+            return Ok(await _employeeRepository.DeleteEmployeeEducation(Id, Guid.Empty));
+        }
     }
 }

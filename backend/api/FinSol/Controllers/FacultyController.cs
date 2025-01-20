@@ -21,9 +21,11 @@ namespace FinSol.Controllers
             _generalRepository = generalRepository;
         }
         [HttpGet("List")]
-        public async Task<ActionResult<ResponseModel>> List()
+        public async Task<ActionResult<ResponseModel>> List([FromQuery] int? campusId = null)
         {
-            return Ok(await _generalRepository.ExecuteStoreProcedure("GetFaculty"));
+            return campusId == null ?
+             Ok(await _generalRepository.ExecuteStoreProcedure("GetFaculty")) :
+             Ok(await _generalRepository.ExecuteStoreProcedure("GetFaculty",new {CampusId = campusId}));
         }
         [HttpPost("Add")]
         public async Task<ActionResult<ResponseModel>> Add(FacultyRequestModel payload)

@@ -57,7 +57,20 @@ namespace FinSol.Controllers
             var status = await _organizationRepository.GetPositions(maxRows);
 
             return status;
-        } 
+        }
+        [HttpGet("GetJobTitles")]
+        public async Task<ResponseModel> GetJobTitles([FromQuery] Guid? positionId = null, int? sectionId = null)
+        {
+            return (positionId == null && sectionId == null) ?
+                (await _generalRepository.ExecuteStoreProcedure("GetJobTitles")) :
+                (await _generalRepository.ExecuteStoreProcedure("GetJobTitles", new { PositionId = positionId, SectionId = sectionId }));
+        }
+        [HttpGet("GetAvailablePosts")]
+        public async Task<ResponseModel> GetAvailablePosts([FromQuery] Guid? jobTitleDptMappId)
+        {
+            return (await _generalRepository.ExecuteStoreProcedure("GetAvailablePosts", new { JobTitleDptMappId = jobTitleDptMappId }));
+        }
+
         [HttpPost("ExecuteSp")]
         public async Task<ResponseModel> ExecuteSp(ExecuteSpRequestModel payload)
         {
