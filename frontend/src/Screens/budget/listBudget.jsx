@@ -26,7 +26,7 @@ const ListBudget = () => {
 
 
     setData(data.length > 0 && data.map(it => {
-      return { position: it.position, provisions: it.provisions }
+      return { Department:it.departmentName, section:it.sectionName, position: it.position, SanctionedPost: it.sanctionedPost }
     }))
   }
 

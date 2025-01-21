@@ -9,8 +9,10 @@
         public double AnnualIncreament { get; set; }
         public double MaxPay { get; set; }
         public int Stages { get; set; }
-        public int Provisions { get; set; }
+        public int SanctionedPost { get; set; }
         public Guid BudgetId { get; set; }
         public string Position { get; set; }
+        public string DepartmentName { get; set; }
+        public string SectionName { get; set; }
     }
 }

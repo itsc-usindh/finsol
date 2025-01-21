@@ -50,7 +50,7 @@ const ListEmployee = () => {
         const data = await CallAPI("Employee/list");
         setList(data);
         setData(data.length > 0 && data.map(it => {
-            return { name: it.firstName + ' ' + it.lastName, CNIC: it.cnic, email: it.email, gender: it.gender, position: it.position, "Joined on": it.appointedOn }
+            return { name: it.name, CNIC: it.cnic, email: it.email, gender: it.gender, position: it.position, "Joined on": it.appointedOn.split('T')[0] }
         }))
     }
 

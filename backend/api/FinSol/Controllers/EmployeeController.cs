@@ -20,6 +20,7 @@ namespace FinSol.Controllers
         [HttpPost("Add")]
         public async Task<ActionResult<ResponseModel>> Add(EmployeeRequestModel payload)
         {
+            //payload.CreatedBy = userId
             return Ok(await _employeeRepository.AddEmployee(payload));
         }
         [HttpGet("List")]

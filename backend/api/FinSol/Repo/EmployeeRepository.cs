@@ -4,6 +4,8 @@ using FinSol.Context;
 using FinSol.IRepo;
 using FinSol.Model.Request;
 using FinSol.Model.Response;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Identity.Client;
 
 namespace FinSol.Repo
 {
@@ -48,6 +50,14 @@ namespace FinSol.Repo
                     Name = payload.Name,
                     FatherName = payload.FatherName,
                     HusbandName = payload.HusbandName,
+                    Surname = payload.Surname,
+                    Title = payload.Title,
+                    Bank = payload.Bank,
+                    AccountNo = payload.AccountNo,
+                    AccountTitle = payload.AccountTitle,
+                    DateOfBirth = payload.DateOfBirth,
+                    MailingAddress = payload.MailingAddress,
+                    NTNnumber = payload.NTNnumber,
                     Email = payload.Email,
                     Contact = payload.Contact,
                     CNIC = payload.CNIC,
@@ -55,7 +65,11 @@ namespace FinSol.Repo
                     Gender = payload.Gender,
                     Religion = payload.Religion,
                     AppointedOn = payload.AppointedOn,
-                    RetiredOn = payload.RetiredOn
+                    RetiredOn = payload.RetiredOn,
+                    DiedOnService = payload.DiedOnService,
+                    Resign = payload.Resign,
+                    Terminated = payload.Terminated,
+                    Createdby = payload.CreatedBy
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
