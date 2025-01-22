@@ -26,5 +26,7 @@ namespace FinSol.Model.Request
         public Nullable<DateTime> DiedOnService { get; set; }
         public Nullable<DateTime> Resign { get; set; }
         public Nullable<DateTime> Terminated { get; set; }
+        public Guid? JobTitleDptMappId { get; set; }
+        public Guid? BorrowedJobTitleDptMappId { get; set; }
     }
 }

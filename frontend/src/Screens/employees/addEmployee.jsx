@@ -6,7 +6,6 @@ import CallAPI from "../../Utils/callApi";
 import Toast from "../../Components/Toast";
 import { data } from "react-router-dom";
 import { getDateFormated } from "../../Utils/helper";
-import EmployeeEducation from "./employeeEducationForm";
 
 const AddEmployee = () => {
     const genders = [
@@ -24,6 +23,7 @@ const AddEmployee = () => {
     const [religion, setReligion] = useState("");
     const [positionId, setPositionId] = useState("");
     const [jobTitleId, setJobTitleId] = useState("");
+    const [borrowedJobTitleDptMappId, setBorrowedJobTitleDptMappId] = useState();
     const [appointedOn, setAppointedOn] = useState("");
     const [retiredOn, setRetiredOn] = useState(null);
     const [msg, setMsg] = useState("");
@@ -38,7 +38,6 @@ const AddEmployee = () => {
     const [jobTitleOptions, setJobTitleOptions] = useState([]);
     const [sectionoptions, setSectionOptions] = useState([]);
 
-    const [placeholder, setPlaceholder] = useState("Select Campus");
     const [campusOptions, setCampusOptions] = useState(campuses);
     const [campusId, setCampusId] = useState(data.id);
     const [facultyOptions, setFacultyOptions] = useState("");
@@ -46,14 +45,12 @@ const AddEmployee = () => {
     const [departmentId, setDepartmentId] = useState("");
     const [departmentoptions, setDepartmentOptions] = useState("");
 
-    const [showAddForm, setShowAddForm] = useState(false);
-
     const [sectionId, setSectionId] = useState("");
     const [postAvailable, setPostAvailable] = useState(false);
 
     // add new usestate
 
-    const [employeeName, setEmployeeName] = useState("");
+    const [name, setName] = useState("");
     const [fatherName, setFatherName] = useState("");
     const [husbandName, setHusbandName] = useState("");
     const [surname, setSurname] = useState("");
@@ -196,6 +193,8 @@ const AddEmployee = () => {
         setGender(option.value);
         console.dir(option);
     };
+
+
     const saveHandler = async () => {
         if (
             selectedPosition &&
@@ -212,30 +211,62 @@ const AddEmployee = () => {
             email !== ""
         ) {
             const payload = {
+                name,
+                fatherName,
+                husbandName,
+                surname,
+                title,
+                bank,
+                accountNo,
+                accountTitle,
+                dateOfBirth,
+                mailingAddress,
+                ntnNumber,
                 email,
                 contact,
                 cnic,
                 profilePhotoUrl,
                 gender,
                 religion,
-                positionId,
                 appointedOn,
                 retiredOn,
+                diedOnService,
+                resign,
+                terminated,
+                jobTitleDptMappId: jobTitleId,
+                borrowedJobTitleDptMappId,
             };
+
             const res = await CallAPI("Employee/Add", "POST", payload);
             if (res && res.msg) {
                 setIsError(false);
                 setMsg(res.msg);
+
+                //clear form
+                setGender("");
+                setName("");
+                setFatherName("");
+                setHusbandName("");
+                setSurname("");
+                setTitle("");
+                setBank("");
+                setAccountNo("");
+                setAccountTitle("");
+                setDateOfBirth("");
+                setMailingAddress("");
+                setNtnNumber("");
                 setEmail("");
                 setContact("");
                 setCNIC("");
                 setProfilePhotoUrl("");
-                setGender("");
                 setReligion("");
-                setPositionId("");
                 setAppointedOn("");
-                setRetiredOn(null);
                 setRetiredOn("");
+                setDiedOnService("");
+                setResign("");
+                setTerminated("");
+                setJobTitleId("");
+                setBorrowedJobTitleDptMappId("");
             }
         } else {
             setIsError(true);
@@ -243,14 +274,6 @@ const AddEmployee = () => {
         }
     };
 
-    const addHandler = async (paylaod) => {
-        console.log("Add", paylaod);
-        const res = await CallAPI("campus/add", "POST", paylaod);
-        if (res.status) {
-            setShowAddForm(false);
-            // runApi();
-        }
-    };
 
     return (
         <>
@@ -275,29 +298,14 @@ const AddEmployee = () => {
 
                         <div className="row m-0">
                             <div className="mb-2 col-6">
-                                {campusOptions && placeholder && campusOptions.length > 0 && (
-                                    <ComboBox
-                                        options={campusOptions}
-                                        placeholder={placeholder}
-                                        itemSelectHandler={(opt) => setCampusId(opt.value)}
-                                    />
+                                {campusOptions && campusOptions.length > 0 && (
+                                    <ComboBox options={campusOptions} placeholder={"-- Select Campus --"} itemSelectHandler={(opt) => setCampusId(opt.value)} />
                                 )}
                             </div>
                             {/* Faculty Title Dropdown */}
 
                             <div className="mb-2 col-6">
-                                {
-                                    placeholder
-                                    && (
-                                        <ComboBox
-                                            disable={!campusId}
-
-                                            options={facultyOptions}
-                                            placeholder={"Faculty Options"}
-
-                                            itemSelectHandler={(opt) => setFacultyId(opt.value)}
-                                        />
-                                    )}
+                                <ComboBox disable={!campusId} options={facultyOptions} placeholder={"-- Select Faculty --"} itemSelectHandler={(opt) => setFacultyId(opt.value)} />
                             </div>
                             {/* department Title Dropdown */}
 
@@ -305,31 +313,12 @@ const AddEmployee = () => {
 
                         <div className="row m-0">
                             <div className="mb-2 col-6">
-                                {
-                                    placeholder &&
-                                    (
-                                        <ComboBox
-                                            options={departmentoptions}
-                                            disable={!facultyId}
-
-                                            placeholder={"Department options"}
-                                            itemSelectHandler={(opt) => setDepartmentId(opt.value)}
-                                        />
-                                    )}
+                                <ComboBox options={departmentoptions} disable={!facultyId} placeholder={"-- Select Department --"} itemSelectHandler={(opt) => setDepartmentId(opt.value)} />
                             </div>
                             {/* Sections Title Dropdown */}
 
                             <div className="mb-2 col-6">
-                                {
-                                    placeholder &&
-                                    (
-                                        <ComboBox
-                                            options={sectionoptions}
-                                            disable={!departmentId}
-                                            placeholder={"Section options"}
-                                            itemSelectHandler={(opt) => setSectionId(opt.value)}
-                                        />
-                                    )}
+                                <ComboBox options={sectionoptions} disable={!departmentId} placeholder={"-- Select Section --"} itemSelectHandler={(opt) => setSectionId(opt.value)} />
                             </div>
 
                         </div>
@@ -337,253 +326,122 @@ const AddEmployee = () => {
                         <div className="row m-0">
                             {/* positoned title dropdown */}
                             <div className="mb-3 col-md-6">
-                                {
-                                    placeholder &&
-                                    (
-                                        <ComboBox
-                                            options={positions}
-                                            disable={!positions}
-
-
-                                            placeholder="-- Select Position --"
-                                            itemSelectHandler={getSelectedPosition}
-                                        />
-                                    )}
+                                <ComboBox options={positions} disable={!positions} placeholder="-- Select Position --" itemSelectHandler={getSelectedPosition} />
                             </div>
 
                             {/* Job Title Dropdown */}
                             <div className="mb-2 col-6">
-                                {
-                                    placeholder &&
-                                    (
-                                        <ComboBox
-                                            options={jobTitleOptions}
-                                            disable={(!selectedPosition ? true : (sectionId.length === 0))}
-
-                                            placeholder={"Select Job title"}
-                                            label="Job Title"
-                                            itemSelectHandler={(opt) => setJobTitleId(opt.value)}
-                                        />
-                                    )}
+                                <ComboBox options={jobTitleOptions} disable={(!selectedPosition ? true : (sectionId.length === 0))} placeholder={"-- Select Job title --"} label="Job Title" itemSelectHandler={(opt) => setJobTitleId(opt.value)} />
                             </div>
                         </div>
-                        <hr className="my-3"/>
+                        <hr className="my-3" />
+                        {!postAvailable && <div className="px-3"><p className="no-data-row text-center">Select a valid Job title to proceed</p></div>}
                         {postAvailable && (
                             <>
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            label="Employe Name"
-                                            required
-                                            value={employeeName}
-                                            setValue={setEmployeeName}
-                                        />
+                                        <FormInput label="Employe Name" required value={name} setValue={setName} />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            label="Father Name"
-                                            required
-                                            value={fatherName}
-                                            setValue={setFatherName}
-                                        />
+                                        <FormInput label="Father Name" required value={fatherName} setValue={setFatherName} />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={husbandName}
-                                            setValue={setHusbandName}
-                                            label="Husband Name"
-                                        />
+                                        <FormInput type="text" value={husbandName} setValue={setHusbandName} label="Husband Name" />
                                     </div>
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={bank}
-                                            setValue={setBank}
-                                            label="Bank"
-                                        />
+                                        <FormInput type="text" value={bank} setValue={setBank} label="Bank" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={surname}
-                                            setValue={setSurname}
-                                            label="Surname"
-                                        />
+                                        <FormInput type="text" value={surname} setValue={setSurname} label="Surname" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={title}
-                                            setValue={setTitle}
-                                            label="Title"
-                                        />
+                                        <FormInput type="text" value={title} setValue={setTitle} label="Title" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={mailingAddress}
-                                            setValue={setMailingAddress}
-                                            label="Mailing Address"
-                                        />
+                                        <FormInput type="text" value={mailingAddress} setValue={setMailingAddress} label="Mailing Address" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={accountNo}
-                                            setValue={setAccountNo}
-                                            label="Account No"
-                                        />
+                                        <FormInput type="text" value={accountNo} setValue={setAccountNo} label="Account No" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={accountTitle}
-                                            setValue={setAccountTitle}
-                                            label="Account Title"
-                                        />
+                                        <FormInput type="text" value={accountTitle} setValue={setAccountTitle} label="Account Title" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={contact}
-                                            setValue={setContact}
-                                            label="Contact"
-                                        />
+                                        <FormInput type="text" value={contact} setValue={setContact} label="Contact" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={gender}
-                                            setValue={setGender}
-                                            label="Gender"
-                                        />
+                                        <ComboBox label="Gender" placeholder="Select Gender" options={genders} itemSelectHandler={getSelectedGender} />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={religion}
-                                            setValue={setReligion}
-                                            label="Religion"
-                                        />
+                                        <FormInput type="text" value={religion} setValue={setReligion} label="Religion" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={cnic}
-                                            setValue={setCNIC}
-                                            label="CNIC"
-                                        />
+                                        <FormInput type="text" value={cnic} setValue={setCNIC} label="CNIC" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={profilePhotoUrl}
-                                            setValue={setProfilePhotoUrl}
-                                            label="Profile Photo"
-                                        />
+                                        <FormInput type="text" value={profilePhotoUrl} setValue={setProfilePhotoUrl} label="Profile Photo" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={ntnNumber}
-                                            setValue={setNtnNumber}
-                                            label="NTN Number"
-                                        />
+                                        <FormInput type="text" value={ntnNumber} setValue={setNtnNumber} label="NTN Number" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="text"
-                                            value={email}
-                                            setValue={setEmail}
-                                            label="Email"
-                                        />
+                                        <FormInput type="text" value={email} setValue={setEmail} label="Email" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(dateOfBirth)}
-                                            setValue={setDateOfBirth}
-                                            label="Date Of Birth"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(dateOfBirth)} setValue={setDateOfBirth} label="Date Of Birth" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(diedOnService)}
-                                            setValue={setDiedOnService}
-                                            label="Died On Service"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(diedOnService)} setValue={setDiedOnService} label="Died On Service" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(appointedOn)}
-                                            setValue={setAppointedOn}
-                                            label="Appointed On"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(appointedOn)} setValue={setAppointedOn} label="Appointed On" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(retiredOn)}
-                                            setValue={setRetiredOn}
-                                            label="Retired On"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(retiredOn)} setValue={setRetiredOn} label="Retired On" />
                                     </div>
                                 </div>
 
                                 <div className="row m-0">
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(terminated)}
-                                            setValue={setTerminated}
-                                            label="Terminated"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(terminated)} setValue={setTerminated} label="Terminated" />
                                     </div>
 
                                     <div className="mb-2 col-6">
-                                        <FormInput
-                                            type="date"
-                                            value={getDateFormated(resign)}
-                                            setValue={setResign}
-                                            label="Resign"
-                                        />
+                                        <FormInput type="date" value={getDateFormated(resign)} setValue={setResign} label="Resign" />
                                     </div>
                                 </div>
 

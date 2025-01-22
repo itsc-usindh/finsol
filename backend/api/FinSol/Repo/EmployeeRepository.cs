@@ -69,7 +69,9 @@ namespace FinSol.Repo
                     DiedOnService = payload.DiedOnService,
                     Resign = payload.Resign,
                     Terminated = payload.Terminated,
-                    Createdby = payload.CreatedBy
+                    Createdby = payload.CreatedBy,
+                    JobTitleDptMappId = payload.JobTitleDptMappId,
+                    BorrowedJobTitleDptMappId = payload.BorrowedJobTitleDptMappId,
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(

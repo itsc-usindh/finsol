@@ -5,7 +5,7 @@ import Topbar from "../../Components/Topbar";
 import CallAPI from "../../Utils/callApi";
 import Toast from "../../Components/Toast";
 import FormInput from "../../Components/FormInput";
-import ComboBox from "../../Components/ComboBox";
+import EmployeeEducation from "./employeeEducationForm";
 
 const ListEmployee = () => {
     const genders = [{ name: "Male", value: "male" }, { name: "Female", value: "female" }]
@@ -16,7 +16,6 @@ const ListEmployee = () => {
     const [msg, setMsg] = useState();
     const [isError, setIsError] = useState(true);
     const [positions, setPositions] = useState();
-    const [selectedPosition, setSelectedPosition] = useState();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -83,21 +82,6 @@ const ListEmployee = () => {
         }
     }
 
-    const getSelectedPosition = (option) => {
-        setSelectedPosition(option);
-        if (option.provisions === 0) {
-            setIsError(true);
-            setMsg("No provision available for " + option.name);
-            return;
-        }
-        setPositionId(option.value)
-        console.dir(option)
-    };
-    const getSelectedGender = (option) => {
-        setGender(option.value)
-        console.dir(option)
-    };
-
     const saveHandler = async() =>{
         const payload = {
             id:selectedRow.id,
@@ -128,7 +112,7 @@ const ListEmployee = () => {
 
             {selectedRow &&
                 <SlideIn show={showSlideIn} setShowSlideIn={setShowSlideIn} title="Employee Edit">
-                    <div className="form row m-0">
+                    {/* <div className="form row m-0">
                         <div className="mb-3 col-md-6">
                             <FormInput label="Position" type="text" required value={positions.find(p => p.value === positionId).name} disabled />
                         </div>
@@ -162,11 +146,8 @@ const ListEmployee = () => {
                         <div className="mb-3 col-md-6">
                             <FormInput label="Retirement Date" type="date" value={retiredOn} setValue={setRetiredOn} />
                         </div>
-                    </div>
-                    
-                    <div className="ms-auto col-3 col-md-3 mt-3">
-                        <button className="butn col-12" onClick={saveHandler}>Update</button>
-                    </div>
+                    </div> */}
+                    <EmployeeEducation/>
                 </SlideIn>}
             <Table title="Employee List" data={data} onEdit={onRowEditHandler} onDelete={onRowDeleteHandler} />
         </>
