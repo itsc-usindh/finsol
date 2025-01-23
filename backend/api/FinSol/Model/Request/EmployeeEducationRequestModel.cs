@@ -7,7 +7,7 @@ namespace FinSol.Model.Request
         public Guid? EmployeeId { get; set; }
         public string? DegreeTitle { get; set; }
         public string? Board { get; set; }
-        public string? InistitueName { get; set; }
+        public string? InstituteName { get; set; }
         public string? YearOfPassing { get; set; }
         public string? GradePercentage { get; set; }
         public int? TotalMarks { get; set; }

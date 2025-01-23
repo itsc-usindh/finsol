@@ -22,6 +22,11 @@ namespace FinSol.Controllers
         {
             //payload.CreatedBy = userId
             return Ok(await _employeeRepository.AddEmployee(payload));
+        } 
+        [HttpGet("GetEmployeeById")]
+        public async Task<ActionResult<ResponseModel>> GetEmployeeById([FromQuery] Guid employeeId)
+        {
+            return Ok(await _employeeRepository.GetEmployeeById(employeeId));
         }
         [HttpGet("List")]
         public async Task<IEnumerable<EmployeeResponseModel>> List([FromQuery] int maxRow = 100)
@@ -31,6 +36,7 @@ namespace FinSol.Controllers
         [HttpPost("Update")]
         public async Task<ActionResult<ResponseModel>> Update(EmployeeRequestModel payload)
         {
+            //payload.ModifiedBy = userid
             return Ok(await _employeeRepository.UpdateEmployee(payload));
         }
         [HttpPost("Delete")]
@@ -48,7 +54,7 @@ namespace FinSol.Controllers
             return Ok(await _employeeRepository.AddEmployeeEducation(payload));
         }
         [HttpGet("ListEmployeeEducation")]
-        public async Task<IEnumerable<EmployeeResponseModel>> ListEmployeeEducation([FromQuery] Guid emplyeeId)
+        public async Task<IEnumerable<EmployeeEducationRequestModel>> ListEmployeeEducation([FromQuery] Guid emplyeeId)
         {
             return await _employeeRepository.GetEmployeeEducations(emplyeeId);
         }

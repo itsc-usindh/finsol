@@ -11,6 +11,7 @@ import Campus from "./Screens/Campus";
 import Faculty from "./Screens/Faculty";
 import Department from "./Screens/Department";
 import Section from "./Screens/Section";
+import EditEmployee from "./Screens/employees/editEmployee";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +29,7 @@ function App() {
           <Route path="/addBudget" element={<AddBudget />} />
           <Route path="/listEmployee" element={<ListEmployee />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
+          <Route path="/editEmployee" element={<EditEmployee/>} />
         </Routes>
       </DashboardLayout> :
 

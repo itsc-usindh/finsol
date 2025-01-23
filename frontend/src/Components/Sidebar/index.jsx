@@ -162,8 +162,14 @@ const Sidebar = () => {
                         route: "/addEmployee",
                         icon: <i className="fas fa-plus icon"></i>,
                         type: 1
+                    },
+                    {
+                        name: "Edit",
+                        route: "/editEmployee",
+                        icon: <i className="fas fa-pen-to-square icon"></i>, 
+                        type: 1
                     }
-                ]
+                ],
             },
         ]);
     },[]);

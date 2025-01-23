@@ -38,6 +38,30 @@ namespace FinSol.Repo
                 return Employee.ToList();
             }
         }
+        public async Task<EmployeeResponseModel> GetEmployeeById(Guid employeeId)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "GetEmployeeById";
+
+                var parameters = new
+                {
+                    EmployeeId = employeeId
+                };
+
+                var query = await connection.QueryMultipleAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+
+                var Employee = (await query.ReadAsync<EmployeeResponseModel>()).FirstOrDefault();
+                Employee.EducationRecords = (await query.ReadAsync<EmployeeEducationRequestModel>()).ToList();
+
+                var Employeex = await connection.QueryAsync<EmployeeResponseModel>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return Employee;
+            }
+        }
 
         public async Task<ResponseModel> AddEmployee(EmployeeRequestModel payload)
         {
@@ -91,10 +115,18 @@ namespace FinSol.Repo
 
                 var parameters = new
                 {
-                    Id= payload.Id,
+                    Id = payload.Id,
                     Name = payload.Name,
                     FatherName = payload.FatherName,
                     HusbandName = payload.HusbandName,
+                    Surname = payload.Surname, // Assuming Surname is also part of the payload
+                    Title = payload.Title, // If Title is part of the payload
+                    Bank = payload.Bank, // If Bank is part of the payload
+                    AccountNo = payload.AccountNo, // If AccountNo is part of the payload
+                    AccountTitle = payload.AccountTitle, // If AccountTitle is part of the payload
+                    DateOfBirth = payload.DateOfBirth, // If DateOfBirth is part of the payload
+                    MailingAddress = payload.MailingAddress, // If MailingAddress is part of the payload
+                    NTNnumber = payload.NTNnumber, // If NTNnumber is part of the payload
                     Email = payload.Email,
                     Contact = payload.Contact,
                     CNIC = payload.CNIC,
@@ -102,8 +134,12 @@ namespace FinSol.Repo
                     Gender = payload.Gender,
                     Religion = payload.Religion,
                     AppointedOn = payload.AppointedOn,
-                    RetiredOn = payload.RetiredOn
-                };
+                    RetiredOn = payload.RetiredOn,
+                    DiedOnService = payload.DiedOnService, // If DiedOnService is part of the payload
+                    Resign = payload.Resign, // If Resign is part of the payload
+                    Terminated = payload.Terminated, // If Terminated is part of the payload
+                    ModifiedBy = payload.ModifiedBy, // Created by user's ID
+                }; ;
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
                     spName,
@@ -135,7 +171,7 @@ namespace FinSol.Repo
             }
         }
 
-        public async Task<IEnumerable<EmployeeResponseModel>> GetEmployeeEducations(Guid empoyeeId)
+        public async Task<IEnumerable<EmployeeEducationRequestModel>> GetEmployeeEducations(Guid empoyeeId)
         {
             using (var connection = _dapperContext.CreateConnection())
             {
@@ -143,11 +179,11 @@ namespace FinSol.Repo
 
                 var parameters = new
                 {
-                    EmmployeeId = empoyeeId
+                    EmployeeId = empoyeeId
                 };
 
 
-                var Employee = await connection.QueryAsync<EmployeeResponseModel>(
+                var Employee = await connection.QueryAsync<EmployeeEducationRequestModel>(
                     spName,
                     parameters,
                     commandType: System.Data.CommandType.StoredProcedure);
@@ -166,11 +202,12 @@ namespace FinSol.Repo
                     EmployeeId = payload.EmployeeId,
                     DegreeTitle = payload.DegreeTitle,
                     Board = payload.Board,
-                    InistitueName = payload.InistitueName,
+                    InstituteName = payload.InstituteName,
                     YearOfPassing = payload.YearOfPassing,
                     GradePercentage = payload.GradePercentage,
                     TotalMarks = payload.TotalMarks,
-                    ObtainMarks = payload.ObtainMarks
+                    ObtainMarks = payload.ObtainMarks,
+                    CreatedBy = payload.CreatedBy
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
@@ -190,14 +227,14 @@ namespace FinSol.Repo
                 var parameters = new
                 {
                     Id = payload.Id,
-                    EmployeeId = payload.EmployeeId,
                     DegreeTitle = payload.DegreeTitle,
                     Board = payload.Board,
-                    InistitueName = payload.InistitueName,
+                    InstituteName = payload.InstituteName,
                     YearOfPassing = payload.YearOfPassing,
                     GradePercentage = payload.GradePercentage,
                     TotalMarks = payload.TotalMarks,
-                    ObtainMarks = payload.ObtainMarks
+                    ObtainMarks = payload.ObtainMarks,
+                    ModifiedBy = payload.ModifiedBy
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
@@ -212,12 +249,12 @@ namespace FinSol.Repo
         {
             using (var connection = _dapperContext.CreateConnection())
             {
-                string spName = "deleteEmployeeEducation";
+                string spName = "DeleteEmployeeEducation";
 
                 var parameters = new
                 {
                     Id = id,
-                    updatedBy = userId
+                    ModifiedBy = userId
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(

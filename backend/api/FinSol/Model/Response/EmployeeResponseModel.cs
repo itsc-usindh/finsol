@@ -1,7 +1,15 @@
-﻿namespace FinSol.Model.Response
+﻿using FinSol.Model.Request;
+
+namespace FinSol.Model.Response
 {
     public class EmployeeResponseModel:BaseModel
     {
+        public string? Campus { get; set; }
+        public string? Faculty { get; set; }
+        public string? Department { get; set; }
+        public string? Section { get; set; }
+        public string? Position { get; set; }
+        public string? JobTitle { get; set; }
         public string? Name { get; set; }
         public string? FatherName { get; set; }
         public string? HusbandName { get; set; }
@@ -24,13 +32,12 @@
         public Nullable<DateTime> DiedOnService { get; set; }
         public Nullable<DateTime> Resign { get; set; }
         public Nullable<DateTime> Terminated { get; set; }
-        public string Position { get; set; }
-        public string JobTitle { get; set; }
         public Guid PositionId { get; set; }
         public double MinPay {  get; set; }
         public double AnnualIncreament {  get; set; }
         public double MaxPay {  get; set; }
         public int Stages {  get; set; }
         public int Provisions {  get; set; }
+        public List<EmployeeEducationRequestModel> EducationRecords { get; set; }
     }
 }

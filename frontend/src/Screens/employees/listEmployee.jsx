@@ -6,8 +6,12 @@ import CallAPI from "../../Utils/callApi";
 import Toast from "../../Components/Toast";
 import FormInput from "../../Components/FormInput";
 import EmployeeEducation from "./employeeEducationForm";
+import { useNavigate } from "react-router-dom";
+
 
 const ListEmployee = () => {
+    const navigator = useNavigate();
+
     const genders = [{ name: "Male", value: "male" }, { name: "Female", value: "female" }]
     const [list, setList] = useState();
     const [data, setData] = useState();
@@ -55,21 +59,7 @@ const ListEmployee = () => {
 
     const onRowEditHandler = (row, e) => {
         const employee = list.find(em => em.cnic === row.CNIC);
-        console.log(employee)
-        setSelectedRow(employee);
-        setShowSlideIn(true);
-        setFirstName(employee.firstName);
-        setLastName(employee.lastName);
-        setCNIC(employee.cnic);
-        setEmail(employee.email);
-        setContact(employee.contact);
-        setReligion(employee.religion);
-        setProfilePhotoUrl(employee.profilePhotoUrl);
-        setGender(employee.gender);
-        setAppointedOn((employee.appointedOn).split('T')[0])
-        setRetiredOn(employee.retiredOn&&(employee.retiredOn).split('T')[0])
-        setPositionId(employee.positionId)
-
+        navigator('/editEmployee?employeeId='+employee.id);
     }
     const onRowDeleteHandler = async (row, e) => {
         const employee = list.find(em => em.cnic === row.CNIC);
@@ -112,41 +102,6 @@ const ListEmployee = () => {
 
             {selectedRow &&
                 <SlideIn show={showSlideIn} setShowSlideIn={setShowSlideIn} title="Employee Edit">
-                    {/* <div className="form row m-0">
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Position" type="text" required value={positions.find(p => p.value === positionId).name} disabled />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="First Name" type="text" required value={firstName} setValue={setFirstName} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Last Name" type="text" required value={lastName} setValue={setLastName} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="CNIC" type="text" required value={cnic} setValue={setCNIC} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Email" type="text" required value={email} setValue={setEmail} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Contact" type="text" value={contact} setValue={setContact} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Religion" type="text" value={religion} setValue={setReligion} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Profile Photo Url" type="text" value={profilePhotoUrl} setValue={setProfilePhotoUrl} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Gender" type="text" required value={genders.find(g => g.value.toLocaleLowerCase() === gender.toLocaleLowerCase()).name} disabled />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Appointment Date" type="date" required value={appointedOn} setValue={setAppointedOn} />
-                        </div>
-                        <div className="mb-3 col-md-6">
-                            <FormInput label="Retirement Date" type="date" value={retiredOn} setValue={setRetiredOn} />
-                        </div>
-                    </div> */}
                     <EmployeeEducation/>
                 </SlideIn>}
             <Table title="Employee List" data={data} onEdit={onRowEditHandler} onDelete={onRowDeleteHandler} />
