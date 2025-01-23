@@ -4,9 +4,8 @@ import Topbar from "../../Components/Topbar";
 import EmployeeEducation from "./employeeEducationForm";
 import CallAPI from "../../Utils/callApi";
 import {
-  data,
   useLocation,
-  useParams,
+  useNavigate,
   useSearchParams,
 } from "react-router-dom";
 import SlideIn from "../../Components/SlideIn";
@@ -15,6 +14,7 @@ import Table from "../../Components/Table";
 function EditEmployee() {
   const { search } = useLocation();
   const [query, setQuery] = useSearchParams(search);
+  const navigation = useNavigate();
 
   const [campus, setCampus] = useState("");
   const [faculty, setFaculty] = useState("");
@@ -49,7 +49,6 @@ function EditEmployee() {
   const [employeeId, setEmployeesId] = useState(query.get("employeeId"));
   const [selectedEducation,setSelectedEducation] = useState();
   const [showEditSlideIn,setShowEditSlideIn] = useState(false);
-//   const [payload, setPayload] = useState("");
 
 
   const [showSlideIn, setShowSlideIn] = useState("");
@@ -63,11 +62,6 @@ function EditEmployee() {
     runApi();
   }, [employeeId]);
 
-//   useEffect(() => {
-//     CallAPI("Employee/Update","POST",payload).then(
-//       (data) => setEmployee(data)
-//     );
-//   }, [employeeId]);
 
   useEffect(() => {
     if (!employee) return;
@@ -100,7 +94,7 @@ function EditEmployee() {
     setResign(employee.resign);
     setTerminated(employee.terminated);
 
-    const _er = employee.educationRecords.map(er=>{
+    const _er = employee?.educationRecords?.map(er=>{
         return{
           "Degree Title": er.degreeTitle,
           "Inistitue Name": er.instituteName,
@@ -141,10 +135,10 @@ function EditEmployee() {
       terminated,
     };
    
-        CallAPI("Employee/Update","POST",payload).then(
-          (data) => setEmployee(data)
-        );
-      
+    const res = await CallAPI("Employee/Update","POST",payload);
+    
+    if(res.status)
+      navigation('/listEmployee')
     
     console.log(payload)
 };

@@ -25,7 +25,7 @@ const AddEmployee = () => {
     const [jobTitleId, setJobTitleId] = useState("");
     const [borrowedJobTitleDptMappId, setBorrowedJobTitleDptMappId] = useState();
     const [appointedOn, setAppointedOn] = useState("");
-    const [retiredOn, setRetiredOn] = useState(null);
+    const [retiredOn, setRetiredOn] = useState("");
     const [msg, setMsg] = useState("");
     const [isError, setIsError] = useState(true);
 
@@ -219,7 +219,6 @@ const AddEmployee = () => {
                 bank,
                 accountNo,
                 accountTitle,
-                dateOfBirth,
                 mailingAddress,
                 ntnNumber,
                 email,
@@ -228,11 +227,12 @@ const AddEmployee = () => {
                 profilePhotoUrl,
                 gender,
                 religion,
-                appointedOn,
-                retiredOn,
-                diedOnService,
-                resign,
-                terminated,
+                dateOfBirth:dateOfBirth===""?null:dateOfBirth,
+                appointedOn:appointedOn===""?null:appointedOn,
+                retiredOn:retiredOn===""?null:retiredOn,
+                diedOnService:diedOnService===""?null:diedOnService,
+                resign:resign===""?null:resign,
+                terminated:terminated===""?null:terminated,
                 jobTitleDptMappId: jobTitleId,
                 borrowedJobTitleDptMappId,
             };
