@@ -24,11 +24,18 @@ h2{
 h3{
     font-size: 16px;
 }
+h4{
+    font-size: 14px;
+}
 hr{
     opacity: 1;
     border: none;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--grey) 20%, var(--grey) 80%, transparent);
+}
+input[disabled] {
+    background: var(--base);
+    cursor: no-drop;
 }
 .light{
     --primary: #1A73E8;

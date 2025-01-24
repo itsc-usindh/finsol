@@ -6,6 +6,7 @@ using FinSol.Model.Request;
 using FinSol.Model.Response;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Identity.Client;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinSol.Repo
 {
@@ -18,6 +19,7 @@ namespace FinSol.Repo
             _dapperContext = dapperContext;
         }
 
+        #region Employee CRUD
         public async Task<IEnumerable<EmployeeResponseModel>> GetAllEmployees(int maxRow)
         {
             using (var connection = _dapperContext.CreateConnection())
@@ -63,6 +65,50 @@ namespace FinSol.Repo
             }
         }
 
+        public async Task<ResponseModel> AddEmployee_Fresh(EmployeeRequestModel payload)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "CreateEmployee_Fresh";
+
+                var parameters = new
+                {
+                    Name = payload.Name,
+                    FatherName = payload.FatherName,
+                    HusbandName = payload.HusbandName,
+                    Surname = payload.Surname,
+                    Title = payload.Title,
+                    Bank = payload.Bank,
+                    AccountNo = payload.AccountNo,
+                    AccountTitle = payload.AccountTitle,
+                    DateOfBirth = payload.DateOfBirth,
+                    MailingAddress = payload.MailingAddress,
+                    NTNnumber = payload.NTNnumber,
+                    Email = payload.Email,
+                    Contact = payload.Contact,
+                    CNIC = payload.CNIC,
+                    ProfilePhotoUrl = payload.ProfilePhotoUrl,
+                    Gender = payload.Gender,
+                    Religion = payload.Religion,
+                    AppointedOn = payload.AppointedOn,
+                    RetiredOn = payload.RetiredOn,
+                    DiedOnService = payload.DiedOnService,
+                    Resign = payload.Resign,
+                    Terminated = payload.Terminated,
+                    Createdby = payload.CreatedBy,
+                    JobTitleDptMappId = payload.JobTitleDptMappId,
+                    BorrowedJobTitleDptMappId = payload.BorrowedJobTitleDptMappId,
+                };
+
+                var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return response;
+            }
+        }
+
         public async Task<ResponseModel> AddEmployee(EmployeeRequestModel payload)
         {
             using (var connection = _dapperContext.CreateConnection())
@@ -96,6 +142,10 @@ namespace FinSol.Repo
                     Createdby = payload.CreatedBy,
                     JobTitleDptMappId = payload.JobTitleDptMappId,
                     BorrowedJobTitleDptMappId = payload.BorrowedJobTitleDptMappId,
+                    Designation = payload.Designation,
+                    Years = payload.Years,
+                    DepartmentName = payload.DepartmentName,
+                    SalaryAmount = payload.SalaryAmount
                 };
 
                 var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
@@ -170,7 +220,9 @@ namespace FinSol.Repo
                 return response;
             }
         }
+        #endregion
 
+        #region Employee Education CRUD
         public async Task<IEnumerable<EmployeeEducationRequestModel>> GetEmployeeEducations(Guid empoyeeId)
         {
             using (var connection = _dapperContext.CreateConnection())
@@ -265,5 +317,53 @@ namespace FinSol.Repo
                 return response;
             }
         }
+        #endregion
+
+        #region Leaves
+        public async Task<IEnumerable<LeaveRequestModel>> GetEmployeeLeaves(Guid empoyeeId)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "GetEmployeeLeaves";
+
+                var parameters = new
+                {
+                    EmployeeId = empoyeeId
+                };
+
+
+                var Employee = await connection.QueryAsync<LeaveRequestModel>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return Employee.ToList();
+            }
+        }
+        public async Task<ResponseModel> ApplyForLeave(LeaveRequestModel payload)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "ApplyForLeave";
+
+                var parameters = new
+                {
+                    EmployeeId = payload.EmployeeId,
+                    LeaveType = payload.LeaveType,
+                    ToDate = payload.ToDate,
+                    FromDate = payload.FromDate,
+                    Reason = payload.Reason,
+                    CreatedBy = payload.CreatedBy
+                };
+
+                var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return response;
+            }
+        }
+        #endregion
     }
 }

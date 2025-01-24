@@ -42,10 +42,6 @@ const ComboBox = ({ options, itemSelectHandler, placeholder, disable }) => {
       <div
         className={`combobox-btn${boxOpened ? " open" : ""}`}
         onClick={openHandler}
-        style={{
-          pointerEvents: disable ? "none" : "auto",
-          opacity: disable ? 0.5 : 1,
-        }}
       >
         <p>{displayText}</p>
         <i className="fa fa-chevron-down"></i>

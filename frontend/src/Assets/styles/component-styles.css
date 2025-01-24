@@ -419,6 +419,14 @@ td.purchased p:before {
     border: solid 1px var(--grey);
 }
 
+.combobox.disabled{
+    cursor: no-drop;
+}
+.combobox.disabled .combobox-btn{
+        pointer-events: none;
+        opacity: 0.5;
+}
+
 .combobox .combobox-btn p{
     max-height: 18px;
     overflow: hidden;

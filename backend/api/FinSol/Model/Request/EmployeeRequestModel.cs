@@ -28,5 +28,10 @@ namespace FinSol.Model.Request
         public Nullable<DateTime> Terminated { get; set; }
         public Guid? JobTitleDptMappId { get; set; }
         public Guid? BorrowedJobTitleDptMappId { get; set; }
+
+        public string? Designation {  get; set; }
+        public double? Years { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? SalaryAmount {  get; set; }
     }
 }

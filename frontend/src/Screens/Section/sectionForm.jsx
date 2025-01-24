@@ -12,10 +12,12 @@ const SectionForm = ({ addNewSectionHandler, model }) => {
     const [faculties, setFaculties] = useState([]);
     const [facultyOptions, setFacultyOptions] = useState();
     const [placeholder, setPlaceholder] = useState("Select Faculty");
+    const [departmentoptions, setDepartmentOptions] = useState("");
+    const [departmentId, setDepartmentId] = useState("");
 
     useEffect(() => {
         const runApi = () => {
-            CallAPI('department/list').then(
+            CallAPI('faculty/list').then(
                 data => setFaculties(data.data)
             )
         }
@@ -24,9 +26,19 @@ const SectionForm = ({ addNewSectionHandler, model }) => {
     }, []);
 
     useEffect(() => {
-        setFacultyOptions(faculties.map(faculty => { return { name: faculty.Name, value: faculty.Id } }));
+        if(faculties.length>0)
+        setFacultyOptions(faculties?.map(faculty => { return { name: faculty.Name, value: faculty.Id } }));
         if(facultyId) setPlaceholder(facultyOptions&&facultyOptions.find(opt=>opt.value === facultyId)?.name);
     }, [faculties]);
+
+    useEffect(() => {
+        if(facultyId)
+        CallAPI("department/list?facultyId=" + facultyId).then((data) =>
+            setDepartmentOptions(data.data.map((Department) => {
+                return { name: Department.Name, value: Department.Id };
+            }))
+        );
+    }, [facultyId]);
 
     const saveHandler = () => {
         console.log(model)
@@ -47,6 +59,15 @@ const SectionForm = ({ addNewSectionHandler, model }) => {
         <>
 
             <div className="row m-0">
+                <div className="mb-2 col-6">
+                    <ComboBox disable={!facultyOptions} options={facultyOptions} placeholder={"-- Select Faculty --"} itemSelectHandler={(opt) => setFacultyId(opt.value)} />
+                </div>
+                {/* department Title Dropdown */}
+
+                <div className="mb-2 col-6">
+                    <ComboBox options={departmentoptions} disable={!facultyId} placeholder={"-- Select Department --"} itemSelectHandler={(opt) => setDepartmentId(opt.value)} />
+                </div>
+
                 <div className="mb-2 col-6">
                     <FormInput type="text" value={name} setValue={setName} label="Name" />
                 </div>

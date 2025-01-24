@@ -42,7 +42,7 @@ const Sidebar = () => {
 
                     subMenu.push(
                         ...submenuItems.map(sm => {
-                            const {route,icon} = RouteParser(sm.config);
+                            const { route, icon } = RouteParser(sm.config);
                             return {
                                 name: sm.name,
                                 route,
@@ -62,7 +62,7 @@ const Sidebar = () => {
                         subMenu: subMenu
                     });
                 }
-                else if(s.parentId===0){
+                else if (s.parentId === 0) {
                     const { route, icon } = RouteParser(s.config);
 
                     _routes.push({
@@ -78,7 +78,7 @@ const Sidebar = () => {
         setRoutes(_routes);
     }
 
-    useEffect(()=> {
+    useEffect(() => {
 
         setRoutes([
             {
@@ -122,9 +122,23 @@ const Sidebar = () => {
                         type: 1,
                         subMenu: null
                     },
+                    {
+                        name: "Job Title",
+                        route: "/jobTitle",
+                        icon: <i className="fas fa-user icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    },
+                    {
+                        name: "Assign Job Title",
+                        route: "/assignJobTitle",
+                        icon: <i className="fas fa-link icon"></i>,
+                        type: 1,
+                        subMenu: null
+                    }
                 ]
             },
-            
+
             {
                 name: "Budget",
                 route: "/budget",
@@ -158,7 +172,13 @@ const Sidebar = () => {
                         type: 1
                     },
                     {
-                        name: "Add",
+                        name: "Fresh Appointment",
+                        route: "/addEmployeeFresh",
+                        icon: <i className="fas fa-plus icon"></i>,
+                        type: 1
+                    },
+                    {
+                        name: "Appointment",
                         route: "/addEmployee",
                         icon: <i className="fas fa-plus icon"></i>,
                         type: 1
@@ -166,13 +186,19 @@ const Sidebar = () => {
                     {
                         name: "Edit",
                         route: "/editEmployee",
-                        icon: <i className="fas fa-pen-to-square icon"></i>, 
+                        icon: <i className="fas fa-pen-to-square icon"></i>,
+                        type: 1
+                    },
+                    {
+                        name: "Leaves",
+                        route: "/employeeLeaves",
+                        icon: <i className="fas fa-calendar icon"></i>,
                         type: 1
                     }
                 ],
             },
         ]);
-    },[]);
+    }, []);
 
 
     const expandItem = (selectedRoute) => {
@@ -183,7 +209,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar-content">
             <div className="title">
-                <h1>Finanace App</h1>
+                <h1>Finance App</h1>
                 <div className="seperator"></div>
             </div>
             <ul className="nav-items">

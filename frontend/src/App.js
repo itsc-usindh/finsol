@@ -12,6 +12,10 @@ import Faculty from "./Screens/Faculty";
 import Department from "./Screens/Department";
 import Section from "./Screens/Section";
 import EditEmployee from "./Screens/employees/editEmployee";
+import AddEmployeeFresh from "./Screens/employees/addEmployeeFresh";
+import EmployeeLeaves from "./Screens/employees/employeeLeaves";
+import JobTitle from "./Screens/jobTitle";
+import AssignJobTitle from "./Screens/jobTitle/assignJobTitle";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,8 +32,12 @@ function App() {
           <Route path="/listBudget" element={<ListBudget />} />
           <Route path="/addBudget" element={<AddBudget />} />
           <Route path="/listEmployee" element={<ListEmployee />} />
+          <Route path="/addEmployeeFresh" element={<AddEmployeeFresh />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
           <Route path="/editEmployee" element={<EditEmployee/>} />
+          <Route path="/employeeLeaves" element={<EmployeeLeaves/>} />
+          <Route path="/jobTitle" element={<JobTitle/>} />
+          <Route path="/assignJobTitle" element={<AssignJobTitle/>} />
         </Routes>
       </DashboardLayout> :
 

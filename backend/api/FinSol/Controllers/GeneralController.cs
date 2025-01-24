@@ -65,6 +65,16 @@ namespace FinSol.Controllers
                 (await _generalRepository.ExecuteStoreProcedure("GetJobTitles")) :
                 (await _generalRepository.ExecuteStoreProcedure("GetJobTitles", new { PositionId = positionId, SectionId = sectionId }));
         }
+        [HttpPost("AddJobTitle")]
+        public async Task<ResponseModel> AddJobTitle([FromQuery] Guid positionId, string title, string description)
+        {
+            return (await _generalRepository.ExecuteStoreProcedure("AddJobTitle", new { PositionId = positionId, Title = title, Description = description }));
+        }
+        [HttpPost("AddJobTitleDptMapp")]
+        public async Task<ResponseModel> AddJobTitleDptMapp([FromQuery] Guid jobTitleId, int sectionId)
+        {
+            return (await _generalRepository.ExecuteStoreProcedure("AddJobTitleDptMapp", new { JobTitleId = jobTitleId, SectionId = sectionId }));
+        }
         [HttpGet("GetAvailablePosts")]
         public async Task<ResponseModel> GetAvailablePosts([FromQuery] Guid? jobTitleDptMappId)
         {

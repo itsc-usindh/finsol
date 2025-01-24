@@ -41,7 +41,7 @@ namespace FinSol.Controllers
                 Email = payload.Email,
                 StartDate = payload.StartDate,
                 UserId = payload.UserId,
-                CampusId = payload.FacultyId,
+                CampusId = payload.CampusId,
             };
             return Ok(await _generalRepository.ExecuteStoreProcedure("AddFaculty", addPayload));
         }
@@ -59,20 +59,20 @@ namespace FinSol.Controllers
                 Email = payload.Email,
                 StartDate = payload.StartDate,
                 UserId = payload.UserId,
-                CampusId = payload.FacultyId,
+                CampusId = payload.CampusId,
                 FacultyId = payload.FacultyId
             };
             return Ok(await _generalRepository.ExecuteStoreProcedure("UpdateFaculty", updatePayload));
         }
         [HttpPost("Delete")]
-        public async Task<ActionResult<ResponseModel>> Delete(int campusId)
+        public async Task<ActionResult<ResponseModel>> Delete(int facultyId)
         {
             Guid uId = Guid.Empty;
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (userId != null) uId = Guid.Parse(userId);
             var deletePayload = new
             {
-                FacultyId = campusId,
+                FacultyId = facultyId,
                 userId = uId
             };
             return Ok(await _generalRepository.ExecuteStoreProcedure("DeleteFaculty", deletePayload));

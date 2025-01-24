@@ -1,9 +1,9 @@
-const CallAPI = async (endpoint, method = "GET", params = null) => {
+const CallAPI = async (endpoint, method = "GET", params = null, headers = null) => {
     try{
         const options = {
             method,
             mode: 'cors',
-            headers: {
+            headers: headers ?? {
               'Access-Control-Allow-Origin':'*',
               'Content-Type': 'application/json',
               'Authorization': `BEARER ${localStorage.getItem('token')}`,

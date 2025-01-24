@@ -17,12 +17,20 @@ namespace FinSol.Controllers
         {
             _employeeRepository = employeeRepository;
         }
+
+        #region Employee
+        [HttpPost("AddFresh")]
+        public async Task<ActionResult<ResponseModel>> AddFresh(EmployeeRequestModel payload)
+        {
+            //payload.CreatedBy = userId
+            return Ok(await _employeeRepository.AddEmployee_Fresh(payload));
+        }
         [HttpPost("Add")]
         public async Task<ActionResult<ResponseModel>> Add(EmployeeRequestModel payload)
         {
             //payload.CreatedBy = userId
             return Ok(await _employeeRepository.AddEmployee(payload));
-        } 
+        }
         [HttpGet("GetEmployeeById")]
         public async Task<ActionResult<ResponseModel>> GetEmployeeById([FromQuery] Guid employeeId)
         {
@@ -45,8 +53,9 @@ namespace FinSol.Controllers
             // add user id from claims when login is done
             return Ok(await _employeeRepository.DeleteEmployee(Id, Guid.Empty));
         }
+        #endregion
 
-        // Employee Education
+        #region  Employee Education
 
         [HttpPost("AddEmployeeEducation")]
         public async Task<ActionResult<ResponseModel>> AddEmployeeEducation(EmployeeEducationRequestModel payload)
@@ -69,5 +78,19 @@ namespace FinSol.Controllers
             // add user id from claims when login is done
             return Ok(await _employeeRepository.DeleteEmployeeEducation(Id, Guid.Empty));
         }
+        #endregion
+
+        #region  Employee Leaves
+        [HttpPost("ApplyForLeave")]
+        public async Task<ActionResult<ResponseModel>> ApplyForLeave(LeaveRequestModel payload)
+        {
+            return Ok(await _employeeRepository.ApplyForLeave(payload));
+        }
+        [HttpGet("GetEmployeeLeaves")]
+        public async Task<IEnumerable<LeaveRequestModel>> GetEmployeeLeaves([FromQuery] Guid emplyeeId)
+        {
+            return await _employeeRepository.GetEmployeeLeaves(emplyeeId);
+        }
+        #endregion
     }
 }

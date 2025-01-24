@@ -12,55 +12,32 @@ import { useNavigate } from "react-router-dom";
 const ListEmployee = () => {
     const navigator = useNavigate();
 
-    const genders = [{ name: "Male", value: "male" }, { name: "Female", value: "female" }]
     const [list, setList] = useState();
     const [data, setData] = useState();
     const [showSlideIn, setShowSlideIn] = useState();
     const [selectedRow, setSelectedRow] = useState();
     const [msg, setMsg] = useState();
     const [isError, setIsError] = useState(true);
-    const [positions, setPositions] = useState();
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [contact, setContact] = useState("");
-    const [cnic, setCNIC] = useState("");
-    const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
-    const [gender, setGender] = useState("");
-    const [religion, setReligion] = useState("");
-    const [positionId, setPositionId] = useState("");
-    const [appointedOn, setAppointedOn] = useState("");
-    const [retiredOn, setRetiredOn] = useState(null);
 
     useEffect(() => {
         runApi();
         console.log(1)
     }, []);
 
-    useEffect(() => {
-        const loadPositions = async () => {
-            const itemdataRes = await CallAPI('General/GetPositions');
-            if (!itemdataRes.length) return;
-            const itemData = itemdataRes.map(item => {
-                return { name: item.title + ' - ' + item.provisions, value: item.id, provisions: item.provisions }
-            })
-            setPositions(itemData)
-        }
-        loadPositions();
-    }, []);
 
     const runApi = async () => {
         const data = await CallAPI("Employee/list");
         setList(data);
         setData(data.length > 0 && data.map(it => {
-            return { name: it.name, CNIC: it.cnic, email: it.email, gender: it.gender, position: it.position, "Joined on": it.appointedOn?.split('T')[0] }
+            return { name: it.name, 'father Name': it.fatherName, surname: it.surname, department: it.department, email: it.email, contact: it.contact, getnder: it.gender, CNIC:it.cnic }
         }))
     }
 
     const onRowEditHandler = (row, e) => {
         const employee = list.find(em => em.cnic === row.CNIC);
-        navigator('/editEmployee?employeeId='+employee.id);
+        navigator('/editEmployee?employeeId=' + employee.id);
     }
+
     const onRowDeleteHandler = async (row, e) => {
         const employee = list.find(em => em.cnic === row.CNIC);
         const res = await CallAPI('Employee/Delete?Id=' + employee.id, 'POST');
@@ -72,28 +49,11 @@ const ListEmployee = () => {
         }
     }
 
-    const saveHandler = async() =>{
-        const payload = {
-            id:selectedRow.id,
-            firstName,
-            lastName,
-            email,
-            contact,
-            cnic,
-            profilePhotoUrl,
-            gender,
-            religion,
-            positionId,
-            appointedOn,
-            retiredOn
-        }
-        const res = await CallAPI('Employee/Update', 'POST', payload);
-
-        setIsError(!res.status);
-        setMsg(res.msg);
-        runApi();
-        setShowSlideIn(false);
+    const onRowViewHandler = async (row, e) => {
+        const employee = list.find(em => em.cnic === row.CNIC);
+        navigator('/employeeLeaves?employeeId=' + employee.id);
     }
+
     return (
         <>
             <Topbar title={"Employee / List"} />
@@ -102,9 +62,10 @@ const ListEmployee = () => {
 
             {selectedRow &&
                 <SlideIn show={showSlideIn} setShowSlideIn={setShowSlideIn} title="Employee Edit">
-                    <EmployeeEducation/>
+                    <EmployeeEducation />
                 </SlideIn>}
-            <Table title="Employee List" data={data} onEdit={onRowEditHandler} onDelete={onRowDeleteHandler} />
+
+            <Table title="Employee List" data={data} onEdit={onRowEditHandler} onDelete={onRowDeleteHandler} onView={onRowViewHandler} />
         </>
     );
 }

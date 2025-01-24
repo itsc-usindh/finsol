@@ -7,7 +7,7 @@ import Toast from "../../Components/Toast";
 import { data } from "react-router-dom";
 import { getDateFormated } from "../../Utils/helper";
 
-const AddEmployee = () => {
+const AddEmployeeFresh = () => {
     const genders = [
         { name: "Male", value: "male" },
         { name: "Female", value: "female" },
@@ -64,10 +64,6 @@ const AddEmployee = () => {
     const [diedOnService, setDiedOnService] = useState("");
     const [resign, setResign] = useState("");
     const [terminated, setTerminated] = useState("");
-    const [designation, setDesignation] = useState("");
-    const [years, setYears] = useState("");
-    const [departmentName, setDepartmentName] = useState("");
-    const [salaryAmount, setSalaryAmount] = useState("");
 
     useEffect(() => {
         const runApi = () => {
@@ -239,13 +235,9 @@ const AddEmployee = () => {
                 terminated: terminated === "" ? null : terminated,
                 jobTitleDptMappId: jobTitleId,
                 borrowedJobTitleDptMappId,
-                designation,
-                years,
-                departmentName,
-                salaryAmount
             };
 
-            const res = await CallAPI("Employee/Add", "POST", payload);
+            const res = await CallAPI("Employee/AddFresh", "POST", payload);
             if (res && res.msg) {
                 setIsError(false);
                 setMsg(res.msg);
@@ -275,10 +267,6 @@ const AddEmployee = () => {
                 setTerminated("");
                 setJobTitleId("");
                 setBorrowedJobTitleDptMappId("");
-                setDesignation("");
-                setYears("");
-                setDepartmentName("");
-                setSalaryAmount("");
             }
         } else {
             setIsError(true);
@@ -289,7 +277,7 @@ const AddEmployee = () => {
 
     return (
         <>
-            <Topbar title="Employees / Appointment" />
+            <Topbar title="Employees / Fresh Appointment" />
 
             {msg && (
                 <Toast
@@ -302,7 +290,7 @@ const AddEmployee = () => {
 
             <div className="px-3">
                 <div className="box floating-heading">
-                    <h2 className="ps-2 mb-4 heading">Add Appointment</h2>
+                    <h2 className="ps-2 mb-4 heading">Add Fresh Appointment</h2>
                     <div className="form row">
                         {/* drop down start here */}
                         {/* Campus Title Dropdown */}
@@ -351,26 +339,6 @@ const AddEmployee = () => {
                         {postAvailable && (
                             <>
                                 <div className="row m-0">
-                                    <h4 className="ml-4">Add Previous Job data</h4>
-                                    <div className="mb-2 col-6">
-                                        <FormInput label="Designation" required value={designation} setValue={setDesignation} />
-                                    </div>
-
-                                    <div className="mb-2 col-6">
-                                        <FormInput label="Department Name" required value={departmentName} setValue={setDepartmentName} />
-                                    </div>
-
-                                    <div className="mb-2 col-6">
-                                        <FormInput type="text" value={years} setValue={setYears} label="Years of Experience" />
-                                    </div>
-
-                                    <div className="mb-2 col-6">
-                                        <FormInput type="text" value={salaryAmount} setValue={setSalaryAmount} label="Last Salary" />
-                                    </div>
-                                </div>
-                                <hr className="my-3" />
-
-                                <div className="row m-0">
                                     <div className="mb-2 col-6">
                                         <FormInput label="Employe Name" required value={name} setValue={setName} />
                                     </div>
@@ -382,7 +350,6 @@ const AddEmployee = () => {
                                     <div className="mb-2 col-6">
                                         <FormInput type="text" value={husbandName} setValue={setHusbandName} label="Husband Name" />
                                     </div>
-                                    
                                     <div className="mb-2 col-6">
                                         <FormInput type="text" value={bank} setValue={setBank} label="Bank" />
                                     </div>
@@ -496,4 +463,4 @@ const AddEmployee = () => {
     );
 };
 
-export default AddEmployee;
+export default AddEmployeeFresh;

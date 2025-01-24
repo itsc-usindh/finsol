@@ -473,6 +473,7 @@ const handleCloseSlideIn = () => {
               noPagination
               isDark
               title="Education Records"
+              onView={()=>{}}
               onEdit={row=>{
                   setSelectedEducation(employee.educationRecords.find(er=>er.degreeTitle === row["Degree Title"]));
                   console.log(selectedEducation)
