@@ -92,5 +92,20 @@ namespace FinSol.Controllers
             return await _employeeRepository.GetEmployeeLeaves(emplyeeId);
         }
         #endregion
+
+        #region Transfer
+        [HttpGet("GetEmployeeTransferHistory")]
+        public async Task<IEnumerable<EmployeeJobMappintResponseModel>> GetEmployeeTransferHistory([FromQuery] Guid employeeId)
+        {
+            //payload.CreatedBy = userId
+            return (await _employeeRepository.GetEmployeeTransferHistory(employeeId));
+        }
+        [HttpPost("TransferEmployee")]
+        public async Task<ActionResult<ResponseModel>> TransferEmployee(EmployeeJobMappintRequestModel payload)
+        {
+            return Ok(await _employeeRepository.TransferEmployee(payload));
+        }
+
+        #endregion
     }
 }

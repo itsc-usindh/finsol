@@ -12,11 +12,9 @@ export const UploadFileGetUrl = async (e) => {
 
     try {
       const response = await CallAPI('upload/uploadImage', 'POST', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
           'Access-Control-Allow-Origin':'*',
           'Authorization': `BEARER ${localStorage.getItem('token')}`,
-        },
       });
       
       if (response.filePath) {

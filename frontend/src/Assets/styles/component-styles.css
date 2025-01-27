@@ -5,6 +5,8 @@
     flex: 1 1 100%;
     overflow: hidden;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar-content .title h1 {
@@ -40,6 +42,8 @@
     list-style: none;
     padding: 0;
     margin-top: 20px;
+    flex: 1;
+    overflow: auto;
 }
 
 .sidebar-content ul li .btn-expandable,
@@ -492,6 +496,22 @@ td.purchased p:before {
 
 .slidein.show {
     right: 0;
+}
+
+.list-view{
+    max-height: 150px;
+    overflow-y: auto;
+}
+.list-view p:nth-child(odd){
+    background-color: var(--base);
+}
+.list-view-from{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.list-view-from .form-input{
+    flex: 1 1 auto;
 }
 
 .slidein .content {

@@ -32,12 +32,17 @@ namespace FinSol.Model.Response
         public Nullable<DateTime> DiedOnService { get; set; }
         public Nullable<DateTime> Resign { get; set; }
         public Nullable<DateTime> Terminated { get; set; }
-        public Guid PositionId { get; set; }
         public double MinPay {  get; set; }
         public double AnnualIncreament {  get; set; }
         public double MaxPay {  get; set; }
         public int Stages {  get; set; }
         public int Provisions {  get; set; }
         public List<EmployeeEducationRequestModel> EducationRecords { get; set; }
+        public int? CampusId { get; set; }
+        public int? FacultyId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SectionId { get; set; }
+        public Guid PositionId { get; set; }
+        public Guid JobTitleId { get; set; }
     }
 }

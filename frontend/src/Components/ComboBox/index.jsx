@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import FormInput from "../FormInput";
 
-const ComboBox = ({ options, itemSelectHandler, placeholder, disable }) => {
+const ComboBox = ({ options, itemSelectHandler, placeholder, disable, initSelectedOption }) => {
   const [boxOpened, setBoxOpened] = useState(false);
   const [displayText, setDisplayText] = useState(
     placeholder ? placeholder : options && options[0]?.name
@@ -22,6 +22,9 @@ const ComboBox = ({ options, itemSelectHandler, placeholder, disable }) => {
     } else {
       setMainOption(options);
     }
+
+    if(initSelectedOption && initSelectedOption !== "")
+      innerItemSelectHandler(initSelectedOption)
   }, [searchOption, options]);
 
   const openHandler = () => {
@@ -29,6 +32,8 @@ const ComboBox = ({ options, itemSelectHandler, placeholder, disable }) => {
   };
 
   const innerItemSelectHandler = (selectedOption) => {
+    console.log("selectedOption")
+    console.log(selectedOption)
     if (!disable) {
       setBoxOpened(false);
       setDisplayText(selectedOption.name);

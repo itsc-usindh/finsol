@@ -6,6 +6,7 @@ import CallAPI from "../../Utils/callApi";
 import Toast from "../../Components/Toast";
 import { data } from "react-router-dom";
 import { getDateFormated } from "../../Utils/helper";
+import ListControl from "../../Components/ListControl";
 
 const AddEmployee = () => {
     const genders = [
@@ -13,7 +14,6 @@ const AddEmployee = () => {
         { name: "Female", value: "female" },
     ];
 
-    const [positions, setPositions] = useState();
     const [selectedPosition, setSelectedPosition] = useState();
     const [email, setEmail] = useState("");
     const [contact, setContact] = useState("");
@@ -21,8 +21,6 @@ const AddEmployee = () => {
     const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
     const [gender, setGender] = useState("");
     const [religion, setReligion] = useState("");
-    const [positionId, setPositionId] = useState("");
-    const [jobTitleId, setJobTitleId] = useState("");
     const [borrowedJobTitleDptMappId, setBorrowedJobTitleDptMappId] = useState();
     const [appointedOn, setAppointedOn] = useState("");
     const [retiredOn, setRetiredOn] = useState("");
@@ -33,19 +31,22 @@ const AddEmployee = () => {
     const [faculties, setFaculties] = useState([]);
     const [departments, setDepartments] = useState([]);
     const [sections, setSections] = useState([]);
+    const [positions, setPositions] = useState();
     const [jobTitles, setJobTitles] = useState([]);
 
-    const [jobTitleOptions, setJobTitleOptions] = useState([]);
-    const [sectionoptions, setSectionOptions] = useState([]);
-
-    const [campusOptions, setCampusOptions] = useState(campuses);
     const [campusId, setCampusId] = useState(data.id);
-    const [facultyOptions, setFacultyOptions] = useState("");
     const [facultyId, setFacultyId] = useState("");
     const [departmentId, setDepartmentId] = useState("");
-    const [departmentoptions, setDepartmentOptions] = useState("");
-
     const [sectionId, setSectionId] = useState("");
+    const [positionId, setPositionId] = useState("");
+    const [jobTitleId, setJobTitleId] = useState("");
+
+    const [campusOptions, setCampusOptions] = useState(campuses);
+    const [facultyOptions, setFacultyOptions] = useState("");
+    const [departmentoptions, setDepartmentOptions] = useState("");
+    const [sectionoptions, setSectionOptions] = useState([]);
+    const [jobTitleOptions, setJobTitleOptions] = useState([]);
+
     const [postAvailable, setPostAvailable] = useState(false);
 
     // add new usestate
@@ -68,6 +69,7 @@ const AddEmployee = () => {
     const [years, setYears] = useState("");
     const [departmentName, setDepartmentName] = useState("");
     const [salaryAmount, setSalaryAmount] = useState("");
+    const [basicPay, setBasicPay] = useState("");
 
     useEffect(() => {
         const runApi = () => {
@@ -364,8 +366,20 @@ const AddEmployee = () => {
                                         <FormInput type="text" value={years} setValue={setYears} label="Years of Experience" />
                                     </div>
 
+
+
                                     <div className="mb-2 col-6">
-                                        <FormInput type="text" value={salaryAmount} setValue={setSalaryAmount} label="Last Salary" />
+                                        <FormInput type="text" value={basicPay} setValue={setBasicPay} label="Basic Pay" />
+                                    </div>
+
+
+
+                                    <div className="mb-2 col-12">
+                                        <ListControl listKeyLable={"Benefit"} listValueLabel={"Amount"} />
+                                    </div>
+
+                                    <div className="mb-2 col-6">
+                                        {/* <Attachmentfield AttachmentLabel={"Attachment"} /> */}
                                     </div>
                                 </div>
                                 <hr className="my-3" />
@@ -382,7 +396,7 @@ const AddEmployee = () => {
                                     <div className="mb-2 col-6">
                                         <FormInput type="text" value={husbandName} setValue={setHusbandName} label="Husband Name" />
                                     </div>
-                                    
+
                                     <div className="mb-2 col-6">
                                         <FormInput type="text" value={bank} setValue={setBank} label="Bank" />
                                     </div>
@@ -482,8 +496,8 @@ const AddEmployee = () => {
                         )}
                     </div>
 
-                    <div className="ms-auto col-3 col-md-1 mt-3">
-                        <button className="butn col-12" onClick={saveHandler}>
+                    <div className="d-flex justify-content-end mt-3 px-2">
+                        <button className="butn" onClick={saveHandler}>
                             Save
                         </button>
                     </div>

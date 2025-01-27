@@ -15,6 +15,8 @@ const ListEmployee = () => {
     const [list, setList] = useState();
     const [data, setData] = useState();
     const [showSlideIn, setShowSlideIn] = useState();
+    const [showActionSlideIn, setShowActionSlideIn] = useState();
+    const [selectedEmployee, setSelectedEmployee] = useState();
     const [selectedRow, setSelectedRow] = useState();
     const [msg, setMsg] = useState();
     const [isError, setIsError] = useState(true);
@@ -51,7 +53,23 @@ const ListEmployee = () => {
 
     const onRowViewHandler = async (row, e) => {
         const employee = list.find(em => em.cnic === row.CNIC);
-        navigator('/employeeLeaves?employeeId=' + employee.id);
+        setSelectedEmployee(employee);
+        setShowActionSlideIn(true)
+    }
+
+    const editEmployeeHandler = ()=>{
+        if(selectedEmployee)
+        navigator('/employeeLeaves?employeeId=' + selectedEmployee.id);
+    }
+
+    const tansferEmployeeHandler = ()=>{
+        if(selectedEmployee)
+        navigator('/listEmployee/transferEmployee?employeeId=' + selectedEmployee.id);
+    }
+
+    const promoteEmployeeHandler = ()=>{
+        if(selectedEmployee)
+        navigator('/promoteEmployee?employeeId=' + selectedEmployee.id);
     }
 
     return (
@@ -64,6 +82,21 @@ const ListEmployee = () => {
                 <SlideIn show={showSlideIn} setShowSlideIn={setShowSlideIn} title="Employee Edit">
                     <EmployeeEducation />
                 </SlideIn>}
+
+            <SlideIn show={showActionSlideIn} setShowSlideIn={setShowActionSlideIn} title="Actions">
+                <div className="d-flex align-items-center mb-3">
+                    <span className="col-7">Edit Employee</span>
+                    <button className="butn col-5" onClick={editEmployeeHandler}>Edit</button>
+                </div>
+                <div className="d-flex align-items-center mb-3">
+                    <span className="col-7">Transfer Employee</span>
+                    <button className="butn col-5" onClick={tansferEmployeeHandler}>Transfer</button>
+                </div>
+                <div className="d-flex align-items-center">
+                    <span className="col-7">Promote Employee</span>
+                    <button className="butn col-5" onClick={promoteEmployeeHandler}>Promote</button>
+                </div>
+            </SlideIn>
 
             <Table title="Employee List" data={data} onEdit={onRowEditHandler} onDelete={onRowDeleteHandler} onView={onRowViewHandler} />
         </>

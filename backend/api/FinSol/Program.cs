@@ -5,6 +5,7 @@ using FinSol.Context;
 using FinSol.IRepo;
 using FinSol.Repo;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600;
+});
 
 var app = builder.Build();
 

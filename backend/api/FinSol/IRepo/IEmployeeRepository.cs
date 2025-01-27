@@ -21,5 +21,9 @@ namespace FinSol.IRepo
         // Leaves
         Task<IEnumerable<LeaveRequestModel>> GetEmployeeLeaves(Guid empoyeeId);
         Task<ResponseModel> ApplyForLeave(LeaveRequestModel payload);
+
+        // Transfer
+        Task<IEnumerable<EmployeeJobMappintResponseModel>> GetEmployeeTransferHistory(Guid employeeId);
+        Task<ResponseModel> TransferEmployee(EmployeeJobMappintRequestModel payload);
     }
 }
