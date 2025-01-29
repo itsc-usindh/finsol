@@ -69,7 +69,7 @@ const ListEmployee = () => {
 
     const promoteEmployeeHandler = ()=>{
         if(selectedEmployee)
-        navigator('/promoteEmployee?employeeId=' + selectedEmployee.id);
+        navigator('/listEmployee/promoteEmployee?employeeId=' + selectedEmployee.id);
     }
 
     return (

@@ -409,6 +409,50 @@ namespace FinSol.Repo
                 return response;
             }
         }
+        #endregion
+
+        #region Promote
+        public async Task<IEnumerable<EmployeeJobMappintResponseModel>> GetEmployeePromoteHistory(Guid employeeId)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "GetEmployeePromoteHistory";
+
+                var parameters = new
+                {
+                    EmployeeId = employeeId
+                };
+
+                var query = await connection.QueryMultipleAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+
+                var Employee = (await query.ReadAsync<EmployeeJobMappintResponseModel>()).ToList();
+
+
+                return Employee;
+            }
+        }
+        public async Task<ResponseModel> PromoteEmployee(EmployeeJobMappintRequestModel payload)
+        {
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                string spName = "PromoteEmployee";
+
+                var parameters = new
+                {
+                    EmployeeId = payload.EmployeeId,
+                    JobTitleDptMappId = payload.JobTitleDptMappId,
+                    BorrowedJobTitleDptMappId = payload.BorrowedJobTitleDptMappId,
+                    Createdby = payload.CreatedBy,
+                };
+
+                var response = await connection.QueryFirstOrDefaultAsync<ResponseModel>(
+                    spName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return response;
+            }
+        }
 
         #endregion
     }

@@ -17,6 +17,7 @@ import EmployeeLeaves from "./Screens/employees/employeeLeaves";
 import JobTitle from "./Screens/jobTitle";
 import AssignJobTitle from "./Screens/jobTitle/assignJobTitle";
 import TransferEmployee from "./Screens/employees/transferEmployee";
+import PromoteEmployee from "./Screens/employees/promoteEmployee";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +39,7 @@ function App() {
           <Route path="/editEmployee" element={<EditEmployee/>} />
           <Route path="/employeeLeaves" element={<EmployeeLeaves/>} />
           <Route path="/listEmployee/transferEmployee" element={<TransferEmployee/>} />
+          <Route path="/listEmployee/promoteEmployee" element={<PromoteEmployee/>} />
           <Route path="/jobTitle" element={<JobTitle/>} />
           <Route path="/assignJobTitle" element={<AssignJobTitle/>} />
         </Routes>

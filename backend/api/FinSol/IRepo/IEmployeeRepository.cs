@@ -25,5 +25,9 @@ namespace FinSol.IRepo
         // Transfer
         Task<IEnumerable<EmployeeJobMappintResponseModel>> GetEmployeeTransferHistory(Guid employeeId);
         Task<ResponseModel> TransferEmployee(EmployeeJobMappintRequestModel payload);
+
+        // Promote
+        Task<IEnumerable<EmployeeJobMappintResponseModel>> GetEmployeePromoteHistory(Guid employeeId);
+        Task<ResponseModel> PromoteEmployee(EmployeeJobMappintRequestModel payload);
     }
 }
